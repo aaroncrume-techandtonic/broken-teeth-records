@@ -1,3 +1,40 @@
+# Broken Teeth Records
+
+A Next.js music label website built with Next.js and Tailwind CSS.
+
+## What this repo contains
+
+- A Next.js app (Next 16) in the `src/app` folder
+- Tailwind CSS for styling
+
+## Getting started
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run the dev server:
+
+```bash
+npm run dev
+```
+
+Build for production:
+
+```bash
+npm run build
+npm start
+```
+
+## Contributing
+
+Open issues and PRs. Follow existing code style and tests (if added).
+
+## License
+
+This repository does not specify a license.
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
