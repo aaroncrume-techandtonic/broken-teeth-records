@@ -71,3 +71,37 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+NEXT_PUBLIC_GEMINI_API_KEY=AIzaSyDkguMH_M90zLjAugO5Gk2NOYAbcvmUrVw
+
+const callGemini = async (prompt, isJson = false) => {
+  const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+  if (!apiKey) {
+    throw new Error("Gemini API key not configured. Add NEXT_PUBLIC_GEMINI_API_KEY to .env.local");
+  }
+  const response = await fetch(
+    "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        contents: [
+          {
+            type: "text",
+            text: prompt,
+          },
+        ],
+        model: "gemini-pro",
+        generationConfig: {
+          maxOutputLength: 1000,
+          temperature: 0.7,
+        },
+      }),
+    }
+  );
+  const data = await response.json();
+  return isJson ? data : data.text;
+};
