@@ -24,3 +24,81 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@media print {
+  @page {
+    size: Letter portrait;
+    margin: 0.4in;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #111111 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  #print-controls {
+    display: none !important;
+  }
+
+  #printable-docs {
+    max-width: none !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .doc-page {
+    break-after: page;
+    page-break-after: always;
+    margin: 0 !important;
+    box-shadow: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden;
+    font-size: 12.5px !important;
+    line-height: 1.25 !important;
+  }
+
+  .doc-page h1 {
+    line-height: 1.05 !important;
+  }
+
+  .doc-page h2 {
+    line-height: 1.1 !important;
+    margin-top: 0.5rem !important;
+    margin-bottom: 0.3rem !important;
+    font-size: 1.05rem !important;
+  }
+
+  .doc-page h3 {
+    line-height: 1.1 !important;
+  }
+
+  .doc-page p {
+    margin-top: 0.3rem !important;
+    margin-bottom: 0.3rem !important;
+  }
+
+  .doc-page .space-y-6 > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 0.55rem !important;
+  }
+
+  .doc-page .mt-16 {
+    margin-top: 1.5rem !important;
+  }
+
+  .doc-page .pt-16 {
+    padding-top: 1rem !important;
+  }
+
+  .doc-page .mb-16 {
+    margin-bottom: 1rem !important;
+  }
+
+  .doc-page:last-child {
+    break-after: auto;
+    page-break-after: auto;
+  }
+}

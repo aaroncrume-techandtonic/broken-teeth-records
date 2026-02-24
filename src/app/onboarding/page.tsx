@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import logo from '../../../public/logo.jpg';
 
 export default function OnboardingPacket() {
   const [formData, setFormData] = useState({
@@ -33,9 +34,9 @@ export default function OnboardingPacket() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f2efe9] font-special relative print:bg-white">
+    <div className="min-h-screen bg-[#f2efe9] text-[#111111] font-special relative print:bg-white">
       {/* Control Panel - not printed */}
-      <div className="fixed top-0 left-0 w-full bg-[#f2efe9] z-50 print:hidden border-b border-black shadow-sm">
+      <div id="print-controls" className="fixed top-0 left-0 w-full bg-[#f2efe9] z-50 print:hidden border-b border-black shadow-sm">
         <div className="max-w-2xl mx-auto flex items-center gap-4 py-4 px-6">
           <input
             type="text"
@@ -61,7 +62,7 @@ export default function OnboardingPacket() {
             className="border border-black rounded px-3 py-2 text-lg font-special focus:outline-none focus:ring-2 focus:ring-black"
           />
           <button
-            onClick={printDocs}
+            onClick={() => window.print()}
             className="bg-black text-white px-6 py-2 rounded font-bold text-lg shadow hover:bg-[#222] transition print:hidden"
           >
             Print Packet
@@ -72,9 +73,9 @@ export default function OnboardingPacket() {
       {/* Printable Documents Container */}
       <div id="printable-docs" className="max-w-2xl mx-auto py-24 px-6 print:p-0">
         {/* Welcome Letter */}
-        <div className="doc-page mb-24 print:mb-0 print:page-break-after-always">
+        <div className="doc-page mb-24 print:mb-0 print:break-after-page print:text-[14px] print:leading-[1.35]">
           <div className="text-center mb-10">
-            <img src="/logo.jpg" alt="Broken Teeth Records Logo" className="w-32 h-32 mx-auto mb-4 object-contain" />
+            <img src={logo.src} alt="Broken Teeth Records Logo" className="w-32 h-32 mx-auto mb-4 object-contain bg-white/40 border border-black/20 print:w-24 print:h-24" loading="eager" />
             <h1 className="text-5xl font-black uppercase tracking-widest border-b-4 border-black pb-4 inline-block">
               Welcome to the family
             </h1>
@@ -113,10 +114,10 @@ export default function OnboardingPacket() {
           </div>
         </div>
         {/* Contractor Agreement */}
-        <div className="doc-page mb-24 print:mb-0 print:page-break-after-always">
+        <div className="doc-page mb-24 print:mb-0 print:break-after-page print:text-[13px] print:leading-[1.3]">
           <div className="flex items-center justify-between border-b-4 border-black pb-6 mb-8">
             <h1 className="text-4xl font-black uppercase tracking-widest w-3/4">Contractor Agreement</h1>
-            <img src="/logo.jpg" alt="Broken Teeth Records Logo" className="w-16 h-16 object-contain" />
+            <img src={logo.src} alt="Broken Teeth Records Logo" className="w-16 h-16 object-contain bg-white/40 border border-black/20 print:w-12 print:h-12" loading="eager" />
           </div>
           <div className="space-y-6 text-sm md:text-base text-justify">
             <p>
@@ -163,22 +164,22 @@ export default function OnboardingPacket() {
           </div>
         </div>
         {/* Certificate of Initiation */}
-        <div className="doc-page print:mb-0">
-          <div className="border-6 border-double border-[#111111] p-8 flex flex-col items-center justify-center text-center py-16">
-            <img src="/logo.jpg" alt="Broken Teeth Records Logo" className="w-40 h-40 mx-auto mb-8 object-contain" />
+        <div className="doc-page print:mb-0 print:break-after-auto print:text-[13px] print:leading-[1.25]">
+          <div className="border-6 border-double border-[#111111] p-8 flex flex-col items-center justify-center text-center py-16 print:py-8 print:px-6">
+            <img src={logo.src} alt="Broken Teeth Records Logo" className="w-40 h-40 mx-auto mb-8 object-contain bg-white/40 border border-black/20 print:w-28 print:h-28 print:mb-5" loading="eager" />
             <h3 className="text-2xl tracking-widest mb-2 font-black uppercase">Official Induction</h3>
-            <h1 className="text-6xl md:text-7xl font-black uppercase mb-8 border-y-4 border-black py-4 w-full">
+            <h1 className="text-6xl md:text-7xl print:text-5xl font-black uppercase mb-8 print:mb-5 border-y-4 border-black py-4 print:py-3 w-full">
               Certificate of Initiation
             </h1>
             <p className="text-xl mb-4">This document certifies that</p>
-            <h2 className="text-4xl md:text-5xl border-b-2 border-dashed border-black pb-2 mb-4 px-8 min-w-[50%] font-black uppercase">
+            <h2 className="text-4xl md:text-5xl print:text-3xl border-b-2 border-dashed border-black pb-2 mb-4 px-8 min-w-[50%] font-black uppercase">
               {formData.name || '__________________'}
             </h2>
             <p className="text-lg max-w-lg mx-auto mb-12">
               has officially signed on as an independent contractor in the role of <strong>{formData.role || '__________________'}</strong>. You are now officially recognized as part of the underground machinery that drives this label.
             </p>
-            <h3 className="text-3xl font-bold mb-16 uppercase">Keep it loud. Keep it raw.</h3>
-            <div className="flex w-full justify-between px-8 md:px-16 mt-auto">
+            <h3 className="text-3xl print:text-2xl font-bold mb-16 print:mb-8 uppercase">Keep it loud. Keep it raw.</h3>
+            <div className="flex w-full justify-between px-8 md:px-16 print:px-8 mt-auto">
               <div className="text-center w-1/3">
                 <div className="border-b-2 border-black h-12 mb-2"></div>
                 <p className="uppercase text-sm tracking-widest font-bold">Label Head</p>
@@ -197,20 +198,5 @@ export default function OnboardingPacket() {
   );
 }
 
-// Print only the documents container
-function printDocs() {
-  const docs = document.getElementById('printable-docs')?.innerHTML;
-  const printWindow = window.open('', '', 'height=900,width=800');
-  if (printWindow) {
-    printWindow.document.write('<html><head><title>Print Packet</title>');
-    printWindow.document.write(document.head.innerHTML);
-    printWindow.document.write('</head><body>');
-    printWindow.document.write(docs || '');
-    printWindow.document.write('</body></html>');
-    printWindow.document.close();
-    printWindow.focus();
-    printWindow.print();
-    printWindow.close();
-  }
-}
+
 
