@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
 
 export default function OnboardingPacket() {
   const [formData, setFormData] = useState({
