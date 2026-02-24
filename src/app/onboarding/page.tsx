@@ -109,9 +109,7 @@ export default function OnboardingPacket() {
       {/* DOCUMENT 1: WELCOME LETTER */}
       <div className="doc-page max-w-4xl mx-auto bg-[#f2efe9] my-8 p-12 border-4 border-[#111111] shadow-lg">
         <div className="text-center mb-10">
-          <div className="w-32 h-32 mx-auto mb-4 bg-gray-200 rounded flex items-center justify-center text-xs text-gray-500">
-            [Logo Placeholder]
-          </div>
+          <img src="/logo.jpg" alt="Broken Teeth Records Logo" className="w-32 h-32 mx-auto mb-4 object-contain" />
           <h1 className="text-5xl font-black uppercase tracking-widest border-b-4 border-black pb-4 inline-block">
             Welcome to the family
           </h1>
@@ -160,9 +158,7 @@ export default function OnboardingPacket() {
       <div className="doc-page max-w-4xl mx-auto bg-[#f2efe9] my-8 p-12 border-4 border-[#111111] shadow-lg">
         <div className="flex items-center justify-between border-b-4 border-black pb-6 mb-8">
           <h1 className="text-4xl font-black uppercase tracking-widest w-3/4">Contractor Agreement</h1>
-          <div className="w-16 h-16 bg-gray-200 rounded flex items-center justify-center text-xs text-gray-500">
-            [Logo]
-          </div>
+          <img src="/logo.jpg" alt="Broken Teeth Records Logo" className="w-16 h-16 object-contain" />
         </div>
 
         <div className="space-y-6 text-sm md:text-base text-justify">
@@ -219,9 +215,7 @@ export default function OnboardingPacket() {
       {/* DOCUMENT 3: CONGRATULATIONS CERTIFICATE */}
       <div className="doc-page max-w-4xl mx-auto bg-[#f2efe9] my-8 p-12 border-4 border-[#111111] shadow-lg">
         <div className="border-6 border-double border-[#111111] p-8 flex flex-col items-center justify-center text-center py-16">
-          <div className="w-40 h-40 mx-auto mb-8 bg-gray-200 rounded flex items-center justify-center text-xs text-gray-500">
-            [Logo Placeholder]
-          </div>
+          <img src="/logo.jpg" alt="Broken Teeth Records Logo" className="w-40 h-40 mx-auto mb-8 object-contain" />
 
           <h3 className="text-2xl tracking-widest mb-2 font-black uppercase">Official Induction</h3>
           <h1 className="text-6xl md:text-7xl font-black uppercase mb-8 border-y-4 border-black py-4 w-full">
