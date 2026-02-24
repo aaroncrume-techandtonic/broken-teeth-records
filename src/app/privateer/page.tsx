@@ -41,7 +41,7 @@ export default function PrivateerApp() {
     { id: 4, task: "Complete End of Period Accounting Checklist.", status: "done" }
   ]);
 
-  const toggleTaskStatus = (id) => {
+  const toggleTaskStatus = (id: number) => {
     setActionItems(items => items.map(item => {
       if (item.id === id) {
         if (item.status === 'done') return { ...item, status: 'pending' };
@@ -69,8 +69,8 @@ export default function PrivateerApp() {
 
   // Plank Test States
   const [plankStep, setPlankStep] = useState(0);
-  const [plankAnswers, setPlankAnswers] = useState([]);
-  const [plankResult, setPlankResult] = useState(null);
+  const [plankAnswers, setPlankAnswers] = useState<string[]>([]);
+  const [plankResult, setPlankResult] = useState<string | null>(null);
   const [isAnalyzingPlank, setIsAnalyzingPlank] = useState(false);
 
   // Expanded Mock Data
@@ -96,8 +96,8 @@ export default function PrivateerApp() {
     ]
   };
 
-  const dynamicFoodCostPct = ((mockRecipe.currentCost / dynamicMenuPrice) * 100).toFixed(1);
-  const dynamicGrossProfit = (dynamicMenuPrice - mockRecipe.currentCost).toFixed(2);
+  const dynamicFoodCostPct: string = ((mockRecipe.currentCost / dynamicMenuPrice) * 100).toFixed(1);
+  const dynamicGrossProfit: string = (dynamicMenuPrice - mockRecipe.currentCost).toFixed(2);
 
   const plankQuestions = [
     { question: "How accurately do you track your Weekly Prime Cost?", options: ["We don't track it weekly.", "We use rough estimates at month's end.", "To the penny, reviewed every Monday."] },
@@ -112,12 +112,12 @@ export default function PrivateerApp() {
   const totalLabor = primeData.hourlyLabor + primeData.salariedLabor + primeData.taxesBenefits;
   const totalPrimeCost = totalCogs + totalLabor;
   
-  const cogsPct = totalSales ? ((totalCogs / totalSales) * 100).toFixed(1) : 0;
-  const laborPct = totalSales ? ((totalLabor / totalSales) * 100).toFixed(1) : 0;
-  const primeCostPct = totalSales ? ((totalPrimeCost / totalSales) * 100).toFixed(1) : 0;
+  const cogsPct: string = totalSales ? ((totalCogs / totalSales) * 100).toFixed(1) : '0';
+  const laborPct: string = totalSales ? ((totalLabor / totalSales) * 100).toFixed(1) : '0';
+  const primeCostPct: string = totalSales ? ((totalPrimeCost / totalSales) * 100).toFixed(1) : '0';
 
   // --- GEMINI API HELPER ---
-  const callGemini = async (prompt, isJson = false) => {
+  const callGemini = async (prompt: string, isJson: boolean = false) => {
     const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
     
     if (!apiKey) {
@@ -126,7 +126,7 @@ export default function PrivateerApp() {
 
     const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
 
-    const payload = {
+    const payload: any = {
       contents: [{ parts: [{ text: prompt }] }],
       systemInstruction: {
         parts: [{ text: "You are The Captain, an expert restaurant turnaround consultant with 20+ years of gritty operations experience. You provide actionable, professional, and slightly nautical-themed advice to distressed restaurant operators. Never break character." }]
@@ -162,7 +162,7 @@ export default function PrivateerApp() {
     try {
       const aiActions = await callGemini(prompt, true);
       if (aiActions && aiActions.length > 0) {
-        setActionItems(aiActions.map((a, i) => ({ ...a, id: Date.now() + i })));
+        setActionItems(aiActions.map((a: any, i: number) => ({ ...a, id: Date.now() + i })));
       }
     } catch (error) {
       console.error("AI Generation Failed", error);
@@ -184,7 +184,7 @@ export default function PrivateerApp() {
     }
   };
 
-  const submitPlankTest = async (finalAnswers) => {
+  const submitPlankTest = async (finalAnswers: string[]) => {
     setIsAnalyzingPlank(true);
     const answersText = finalAnswers.map((ans, i) => `Q: ${plankQuestions[i].question} A: ${ans}`).join(' | ');
     const prompt = `The restaurant operator took the 'PRR Plank Test'. Here are their answers: ${answersText}. 
@@ -201,13 +201,13 @@ export default function PrivateerApp() {
     }
   };
 
-  const handlePrimeInputChange = (e) => {
+  const handlePrimeInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setPrimeData(prev => ({ ...prev, [name]: Number(value) || 0 }));
   };
 
   // UI Components
-  const renderPaywall = (featureName, description) => (
+  const renderPaywall = (featureName: string, description: string) => (
     <div className="flex flex-col items-center justify-center h-full text-center p-8 bg-slate-900 border border-slate-800 rounded-lg animate-in fade-in zoom-in duration-500">
       <div className="w-20 h-20 bg-amber-500/10 rounded-full flex items-center justify-center mb-6">
         <Lock className="text-amber-500 w-10 h-10" />
@@ -305,8 +305,8 @@ export default function PrivateerApp() {
                 <h2 className="text-3xl font-light text-white">Command Center</h2>
                 <p className="text-slate-400 mt-1">Live Operational Overview</p>
               </div>
-              <div className={`px-4 py-2 rounded-full text-sm font-medium border ${primeCostPct > 60 ? 'bg-rose-900/30 text-rose-400 border-rose-500/30' : 'bg-emerald-900/30 text-emerald-400 border-emerald-500/30'}`}>
-                Status: {primeCostPct > 60 ? 'Taking on Water' : 'Smooth Sailing'}
+              <div className={`px-4 py-2 rounded-full text-sm font-medium border ${parseFloat(primeCostPct) > 60 ? 'bg-rose-900/30 text-rose-400 border-rose-500/30' : 'bg-emerald-900/30 text-emerald-400 border-emerald-500/30'}`}>
+                Status: {parseFloat(primeCostPct) > 60 ? 'Taking on Water' : 'Smooth Sailing'}
               </div>
             </header>
 
@@ -407,12 +407,12 @@ export default function PrivateerApp() {
                   
                   <div className="pt-6 mt-6 border-t border-slate-800">
                     <p className="text-center text-sm text-slate-400 mb-2">Weekly Prime Cost</p>
-                    <div className={`text-center text-5xl font-light mb-2 ${primeCostPct > 60 ? 'text-rose-400' : primeCostPct < 55 ? 'text-emerald-400' : 'text-amber-400'}`}>
+                    <div className={`text-center text-5xl font-light mb-2 ${parseFloat(primeCostPct) > 60 ? 'text-rose-400' : parseFloat(primeCostPct) < 55 ? 'text-emerald-400' : 'text-amber-400'}`}>
                       {primeCostPct}%
                     </div>
                     <p className="text-center text-sm text-slate-500">
                       Target: &lt; 60% <br/>
-                      {primeCostPct > 60 ? "🚨 You are bleeding cash. Fix this immediately." : "✅ Excellent margin control."}
+                      {parseFloat(primeCostPct) > 60 ? "🚨 You are bleeding cash. Fix this immediately." : "✅ Excellent margin control."}
                     </p>
                   </div>
                 </div>
@@ -436,7 +436,7 @@ export default function PrivateerApp() {
                   <div>
                     <h3 className="text-2xl font-medium text-white">{mockRecipe.name}</h3>
                     <div className="flex items-center gap-4 mt-2">
-                      <span className={`px-2 py-1 rounded text-xs font-bold ${dynamicFoodCostPct > 30 ? 'bg-rose-500/20 text-rose-400' : 'bg-emerald-500/20 text-emerald-400'}`}>
+                      <span className={`px-2 py-1 rounded text-xs font-bold ${parseFloat(dynamicFoodCostPct) > 30 ? 'bg-rose-500/20 text-rose-400' : 'bg-emerald-500/20 text-emerald-400'}`}>
                         {dynamicFoodCostPct}% Food Cost
                       </span>
                       <span className="text-emerald-500 text-sm font-medium">
@@ -593,7 +593,7 @@ export default function PrivateerApp() {
                         </tr>
                       )) : (
                         <tr>
-                          <td colSpan="7" className="p-8 text-center text-slate-500">
+                          <td colSpan={7} className="p-8 text-center text-slate-500">
                             No items found in the hold matching "{inventorySearch}".
                           </td>
                         </tr>
@@ -731,7 +731,7 @@ export default function PrivateerApp() {
 }
 
 // Helper Components
-function NavItem({ icon, label, isActive, onClick, highlight }) {
+function NavItem({ icon, label, isActive, onClick, highlight }: { icon: React.ReactNode; label: string; isActive: boolean; onClick: () => void; highlight?: boolean }) {
   return (
     <button
       onClick={onClick}
@@ -749,8 +749,9 @@ function NavItem({ icon, label, isActive, onClick, highlight }) {
   );
 }
 
-function KpiCard({ title, value, target, unit, isInverseGood, highlight }) {
-  const diff = value - target;
+function KpiCard({ title, value, target, unit, isInverseGood, highlight }: { title: string; value: string | number; target: number; unit: string; isInverseGood: boolean; highlight?: boolean }) {
+  const numValue = typeof value === 'string' ? parseFloat(value) : value;
+  const diff = numValue - target;
   const isBad = isInverseGood ? diff > 0 : diff < 0;
   return (
     <div className={`p-6 rounded-lg border transition-all ${highlight ? 'bg-slate-800 border-amber-500/50 shadow-[0_0_15px_rgba(245,158,11,0.1)]' : 'bg-slate-900 border-slate-800 hover:border-slate-700'}`}>
@@ -768,7 +769,7 @@ function KpiCard({ title, value, target, unit, isInverseGood, highlight }) {
   );
 }
 
-function InputGroup({ label, name, value, onChange }) {
+function InputGroup({ label, name, value, onChange }: { label: string; name: string; value: number; onChange: (e: React.ChangeEvent<HTMLInputElement>) => void }) {
   return (
     <div className="space-y-1">
       <label className="text-xs text-slate-400 font-medium uppercase tracking-wider">{label}</label>
@@ -783,7 +784,7 @@ function InputGroup({ label, name, value, onChange }) {
   );
 }
 
-function ResultRow({ label, value, subtext }) {
+function ResultRow({ label, value, subtext }: { label: string; value: string; subtext?: string }) {
   return (
     <div className="flex justify-between items-center">
       <div>
