@@ -72,7 +72,7 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
-NEXT_PUBLIC_GEMINI_API_KEY=AIzaSyDkguMH_M90zLjAugO5Gk2NOYAbcvmUrVw
+NEXT_PUBLIC_GEMINI_API_KEY=
 
 const callGemini = async (prompt, isJson = false) => {
   const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
